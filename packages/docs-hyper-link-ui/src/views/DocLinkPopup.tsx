@@ -32,7 +32,7 @@ import type { LocaleKey } from '../locale/types';
 import { DeleteDocHyperLinkCommand } from '../commands/commands/delete-link.command';
 import { ClickDocHyperLinkOperation, ShowDocHyperLinkEditPopupOperation } from '../commands/operations/popup.operation';
 import { DocHyperLinkPopupService } from '../services/hyper-link-popup.service';
-import { getDocHyperLinkTarget } from '../utils/hyper-link-target';
+import { getDocHyperLinkTarget, getDocHyperLinkTargetLabel } from '../utils/hyper-link-target';
 
 export const DocLinkPopup = () => {
     const hyperLinkService = useDependency(DocHyperLinkPopupService);
@@ -58,6 +58,7 @@ export const DocLinkPopup = () => {
     }
 
     const target = getDocHyperLinkTarget(link.properties);
+    const targetLabel = getDocHyperLinkTargetLabel(link.properties, body);
     const canEdit = hyperLinkService.canEditLink(unitId, currentPopup);
     const canCopy = getDocumentPermissionValue(permissionService, unitId, unitId, UnitAction.Copy);
     return (
@@ -94,8 +95,8 @@ export const DocLinkPopup = () => {
                 >
                     <LinkIcon />
                 </div>
-                <Tooltip showIfEllipsis title={target}>
-                    <span className="univer-flex-1 univer-truncate">{target}</span>
+                <Tooltip showIfEllipsis title={targetLabel}>
+                    <span className="univer-flex-1 univer-truncate">{targetLabel}</span>
                 </Tooltip>
             </div>
             <div className="univer-flex univer-h-6 univer-flex-[0_0_auto] univer-items-center univer-justify-center">
